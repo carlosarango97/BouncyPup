@@ -1,3 +1,18 @@
+/* Labels */
+/* Sections */
+/* Identifiers */
+
+#level-1-canvas{
+    width: 320px;
+    height: 570px;
+    border: 1px solid #000000;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Class */
+
 .invisible{
     display: none;
 }
+
