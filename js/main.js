@@ -19,25 +19,11 @@ sprite.src = "img/level1.png";
 const bg={
     sX : 0,
     sY : 0,
-    w : 275,
-    h : 224,
+    w : 278,
+    h : 570,
     x : 0,
-    ch : 59,
-    y : cvs.height - 59,
-    draw: function(){
-        ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.ch);       
-        ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.ch);   
-    }
-}
-
-const fg={
-    sX: 0,
-    sY: 281,
-    w: 295,
-    h: 170,
-    x: 0,
-    y: cvs.height - 40,
-    ch: 45,
+    ch : 150,
+    y : 0,
     draw: function(){
         ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.ch);       
         ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.ch);   
@@ -45,21 +31,19 @@ const fg={
 }
 
 const character={
-    animation:[
-        {sX: 290, sY: 99, w: 98, h: 101, ch: 14, cw: 57},
-        {sX: 292, sY: 207, w: 95, h: 62, ch: 12, cw: 57}
-    ],   
-    y: 40, 
+    sX: 290,
+    sY: 99,
+    w: 98,
+    h: 101,
+    ch: 14,
+    cw: 57, 
+    y: 20, 
     x:  50,
-    frame: 0,
     speed: 0,
-    jump: 4.6,
-    gravity: 0.25,
+    jump: 1.4,
+    gravity: 0.08,
     draw: function(){
-        let charact = this.animation[this.frame];
-        this.y += this.frame == 1 ? 2 :0;
-        ctx.drawImage(sprite, charact.sX, charact.sY, charact.w, charact.h, this.x, this.y, charact.cw, charact.ch);       
-        this.y -= this.frame == 1 ? 2 :0;
+        ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.cw, this.ch);  
     },
 
     flap: function(){
@@ -67,32 +51,32 @@ const character={
     },
 
     update: function(){
-        this.frame += frames % 10 == 0 ? 1:0;
-        this.frame = this.frame % this.animation.length;
         if(state.current == state.getReady){
-
+            this.y = 20;
+            this.speed = 0;
         }else{
-            this.speed += this.gravity;
-            this.y += this.speed;
-            if(this.y+this.animation[this.frame].ch/2>=cvs.height-fg.ch){
-                this.y=cvs.height-fg.ch-this.animation[this.frame].ch/2;
+            if(this.y+this.ch/2>=110){
+                this.y=cvs.height-40;
                 if(state.current==state.game){
                     state.current = state.gameOver;
                 }
+            }else{                
+                this.speed += this.gravity;
+                this.y += this.speed;
             }
         }
     }
 }
 
 const over={
-    sX: 0,
-    sY: 480,
-    w: 231,
-    h: 53,
-    x: 70,
-    y: 50,
-    ch: 14,
-    cw: 171,
+    sX: 882.5,
+    sY: 0,
+    w: 320,
+    h: 570,
+    x: 0,
+    y: 0,
+    ch: 150,
+    cw: 320,
     draw: function(){
         if(state.current == state.gameOver)
             ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.cw, this.ch);       
@@ -124,7 +108,6 @@ function draw(){
     ctx.fillStyle =" #70c5ce";
     ctx.fillRect(0, 0, cvs.width, cvs.height);    
     bg.draw();
-    fg.draw();
     character.draw();    
     over.draw();
 }
