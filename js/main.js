@@ -55,7 +55,7 @@ const character={
     h: 991,
     ch: 20,
     cw: 80, 
-    y: 55, 
+    y: 65, 
     x:  50,
     speed: 0,
     // jump: 2.3, // Hard
@@ -71,7 +71,7 @@ const character={
 
     update: function(){
         if(state.current == state.getReady){
-            this.y = 55;
+            this.y = 65;
             this.speed = 0;
         }else{
             if(this.y+this.ch/2>=130){
@@ -172,17 +172,20 @@ const obstacles = {
             let p = this.position[i];
             p.x -= this.dx;
             let bottomObstacleYPos = p.y + this.top.ch + this.gap;
-            if(character.x + character.cw/2 > (p.x-30) && character.x - character.cw/2 < (p.x-30) + this.top.cw && character.y + character.ch/2 > p.y && character.y<p.y + this.top.ch){
-                // state.current = state.gameOver;
-                // this.clear();
+            if(character.x + character.cw/2 > (p.x-30) && character.x< (p.x-30) + this.top.cw && character.y + character.ch/2 > p.y && character.y<p.y + this.top.ch){
+                state.current = state.gameOver;
+                this.clear();
+                cantObstacles = 0;
             }
             if(character.x + character.cw/2 > (p.x+40) && character.x - character.cw/2 < (p.x+40) + this.top.cw && character.y + character.ch/2 > (p.y-50) && character.y<(p.y-50) + this.top.ch){
-                // state.current = state.gameOver;
-                // this.clear();
+                state.current = state.gameOver;
+                this.clear();
+                cantObstacles = 0;
             }
             if(character.x  + character.cw/2 > p.x && character.x - character.cw/2 < p.x+this.bottom.cw && character.y + character.ch >bottomObstacleYPos && character.y - character.ch/2< bottomObstacleYPos + p.bh){
-                // state.current = state.gameOver;
-                // this.clear();
+                state.current = state.gameOver;
+                this.clear();
+                cantObstacles = 0;
             }
             if(p.x + this.top.cw + 40 <= 0){
                 this.position.shift();
@@ -215,6 +218,11 @@ cvs.addEventListener("touchstart",function(evt){
         case state.gameOver:
             state.current = state.getReady;
             break;
+        case state.win:
+            state.current = state.getReady;
+            obstacles.clear();
+            cantObstacles = 0;
+            character.x = 50;
     }
 });
 
@@ -225,6 +233,7 @@ function draw(){
     obstacles.draw();
     character.draw();    
     over.draw();
+    win.draw();
 }
 
 function update(){
