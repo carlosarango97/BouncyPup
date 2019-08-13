@@ -43,7 +43,7 @@ const character={
     h: 101,
     ch: 14,
     cw: 57, 
-    y: 20, 
+    y: 55, 
     x:  50,
     speed: 0,
     jump: 1.4,
@@ -58,7 +58,7 @@ const character={
 
     update: function(){
         if(state.current == state.getReady){
-            this.y = 20;
+            this.y = 55;
             this.speed = 0;
         }else{
             if(this.y+this.ch/2>=130){
@@ -67,8 +67,8 @@ const character={
                     state.current = state.gameOver;
                 }
             }else{                
-                this.speed += this.gravity;
-                this.y += this.speed;
+            //     this.speed += this.gravity;
+            //     this.y += this.speed;
             }
         }
     }
@@ -130,6 +130,16 @@ const obstacles = {
         for(let i = 0; i<this.position.length; i++){
             let p = this.position[i];
             p.x -= this.dx;
+            let bottomObstacleYPos = p.y + this.top.ch + this.gap;
+            if(character.x + character.w/2 > (p.x-30) && character.x - character.w/2 < (p.x-30) + this.top.w && character.y + character.ch/2 >p.y && character.y - character.ch/4<p.y + this.top.ch){
+                state.current = state.gameOver;
+            }
+            if(character.x  + character.w/2 > p.x && character.x - character.w/2 < p.x+this.bottom.w && character.y + character.ch/2 >bottomObstacleYPos && character.y - character.ch/2< bottomObstacleYPos + this.bottom.ch){
+                //state.current = state.gameOver;
+            }
+            if(p.x + this.top.w <= 0){
+                this.position.shift();
+            }
         }
     }
 }
