@@ -19,10 +19,10 @@ const sprite = new Image();
 sprite.src = "img/level1.png";
 
 const background = new Image();
-background.src = "img/fondoniv3.png";
+background.src = "img/fondoniv3-.png";
 
 const dog = new Image();
-dog.src = "img/perroniv3.png";
+dog.src = "img/perroniv3-.png";
 
 const imgObstacles = new Image();
 imgObstacles.src = "img/obstaculosniv3.png";
