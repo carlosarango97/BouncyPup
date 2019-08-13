@@ -106,9 +106,9 @@ const obstacles = {
     position : [],
     bottom: {
         sX: 7,
-        sY: 1483,
+        sY: 1843,
         w: 412,
-        h: 826,
+        h: 466,
         ch: 40,
         cw: 100
     },
@@ -120,7 +120,7 @@ const obstacles = {
         ch: 33,
         cw: 150
     },
-    gap: 15,
+    gap: 50,
     maxYPos: 2,
     dx: 2,
     draw: function(){
@@ -128,9 +128,9 @@ const obstacles = {
             let p = this.position[i];
             let topYPos = p.y;
             let bottomYPos = p.y + this.top.ch + this.gap;
-            let bottomH = 135 - bottomYPos;
+            p.bh = 135 - bottomYPos;
             ctx.drawImage(imgObstacles, this.top.sX, this.top.sY, this.top.w, this.top.h, (p.x-30), topYPos, this.top.cw, this.top.ch);       
-            ctx.drawImage(imgObstacles, this.bottom.sX, this.bottom.sY, this.bottom.w, this.bottom.h, p.x, bottomYPos, this.bottom.cw, bottomH); 
+            ctx.drawImage(imgObstacles, this.bottom.sX, this.bottom.sY, this.bottom.w, this.bottom.h, p.x, bottomYPos, this.bottom.cw, p.bh); 
             ctx.drawImage(imgObstacles, this.top.sX, this.top.sY, this.top.w, this.top.h, (p.x+40), (topYPos-50), this.top.cw, this.top.ch);          
         }
     },
@@ -144,18 +144,25 @@ const obstacles = {
         if(frames%150 == 0){
             this.position.push({
                 x: cvs.width,                
-                y: this.maxYPos * (Math.random()*18+2)
+                y: Math.random()*30+5,
+                bh: 0
             });
         }        
         for(let i = 0; i<this.position.length; i++){
             let p = this.position[i];
             p.x -= this.dx;
             let bottomObstacleYPos = p.y + this.top.ch + this.gap;
-            if(character.x + character.w/2 > (p.x-30) && character.x - character.w/2 < (p.x-30) + this.top.w && character.y + character.ch/2 >p.y && character.y - character.ch/2<p.y + this.top.ch){
-                // state.current = state.gameOver;
+            if(character.x + character.cw/2 > (p.x-30) && character.x - character.cw/2 < (p.x-30) + this.top.cw && character.y + character.ch/2 > p.y && character.y<p.y + this.top.ch){
+                state.current = state.gameOver;
+                this.clear();
             }
-            if(character.x  + character.w/2 > p.x && character.x - character.w/2 < p.x+this.bottom.w && character.y + character.ch/2 >bottomObstacleYPos && character.y - character.ch/2< bottomObstacleYPos + this.bottom.ch){
-                // state.current = state.gameOver;
+            if(character.x + character.cw/2 > (p.x+40) && character.x - character.cw/2 < (p.x+40) + this.top.cw && character.y + character.ch/2 > (p.y-50) && character.y<(p.y-50) + this.top.ch){
+                state.current = state.gameOver;
+                this.clear();
+            }
+            if(character.x  + character.cw/2 > p.x && character.x - character.cw/2 < p.x+this.bottom.cw && character.y + character.ch >bottomObstacleYPos && character.y - character.ch/2< bottomObstacleYPos + p.bh){
+                state.current = state.gameOver;
+                this.clear();
             }
             if(p.x + this.top.w <= 0){
                 this.position.shift();
