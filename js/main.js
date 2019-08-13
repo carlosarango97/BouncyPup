@@ -8,12 +8,12 @@ function page(pageOut, pageIn){
     window.scroll(0,document.getElementById(pageIn).scrollTop);
 }
 
-
-
 const cvs = document.getElementById("level-1-canvas");
 const ctx = cvs.getContext("2d");
 
 let frames = 0;
+
+let cantObstacles = 0;
 
 const sprite = new Image();
 sprite.src = "img/level1.png";
@@ -58,7 +58,8 @@ const character={
     y: 55, 
     x:  50,
     speed: 0,
-    jump: 2.3,
+    // jump: 2.3, // Hard
+    jump: 1.4, // Easy
     gravity: 0.08,
     draw: function(){
         ctx.drawImage(dog, this.sX, this.sY, this.w, this.h, this.x, this.y, this.cw, this.ch);  
@@ -79,9 +80,13 @@ const character={
                     state.current = state.gameOver;
                     obstacles.clear();
                 }
+            }if(state.current==state.beforeWin){
+                this.x +=2;  
+                if(this.x > cvs.width)              
+                    state.current = state.win;
             }else{                
-                this.speed += this.gravity;
-                this.y += this.speed;
+                // this.speed += this.gravity;
+                // this.y += this.speed;
             }
         }
     }
@@ -98,6 +103,21 @@ const over={
     cw: 320,
     draw: function(){
         if(state.current == state.gameOver)
+            ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.cw, this.ch);       
+    }
+}
+
+const win = {
+    sX: 882.5,
+    sY: 0,
+    w: 320,
+    h: 570,
+    x: 0,
+    y: 0,
+    ch: 150,
+    cw: 320,
+    draw: function(){
+        if(state.current == state.win)
             ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.cw, this.ch);       
     }
 }
@@ -153,19 +173,23 @@ const obstacles = {
             p.x -= this.dx;
             let bottomObstacleYPos = p.y + this.top.ch + this.gap;
             if(character.x + character.cw/2 > (p.x-30) && character.x - character.cw/2 < (p.x-30) + this.top.cw && character.y + character.ch/2 > p.y && character.y<p.y + this.top.ch){
-                state.current = state.gameOver;
-                this.clear();
+                // state.current = state.gameOver;
+                // this.clear();
             }
             if(character.x + character.cw/2 > (p.x+40) && character.x - character.cw/2 < (p.x+40) + this.top.cw && character.y + character.ch/2 > (p.y-50) && character.y<(p.y-50) + this.top.ch){
-                state.current = state.gameOver;
-                this.clear();
+                // state.current = state.gameOver;
+                // this.clear();
             }
             if(character.x  + character.cw/2 > p.x && character.x - character.cw/2 < p.x+this.bottom.cw && character.y + character.ch >bottomObstacleYPos && character.y - character.ch/2< bottomObstacleYPos + p.bh){
-                state.current = state.gameOver;
-                this.clear();
+                // state.current = state.gameOver;
+                // this.clear();
             }
-            if(p.x + this.top.w <= 0){
+            if(p.x + this.top.cw + 40 <= 0){
                 this.position.shift();
+                cantObstacles++;
+                if(cantObstacles==10){
+                    state.current = state.beforeWin;
+                }
             }
         }
     }
@@ -175,7 +199,9 @@ const state = {
     current : 0,
     getReady: 0,
     game: 1,
-    gameOver: 2
+    gameOver: 2,
+    beforeWin: 3,
+    win: 4
 }
 
 cvs.addEventListener("touchstart",function(evt){
