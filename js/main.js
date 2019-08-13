@@ -24,9 +24,15 @@ const bg={
     x : 0,
     ch : 150,
     y : 0,
+    dx: 2,
     draw: function(){
         ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.ch);       
         ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.ch);   
+    },
+    update: function(){
+        if(state.current == state.game){
+            this.x = (this.x - this.dx) % this.w;
+        }
     }
 }
 
@@ -55,8 +61,8 @@ const character={
             this.y = 20;
             this.speed = 0;
         }else{
-            if(this.y+this.ch/2>=110){
-                this.y=cvs.height-40;
+            if(this.y+this.ch/2>=130){
+                this.y=cvs.height- 20;
                 if(state.current==state.game){
                     state.current = state.gameOver;
                 }
@@ -80,6 +86,51 @@ const over={
     draw: function(){
         if(state.current == state.gameOver)
             ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.cw, this.ch);       
+    }
+}
+
+const obstacles = {
+    position : [],
+    bottom: {
+        sX: 557,
+        sY: 259,
+        w: 75,
+        h: 133,
+        ch: 35
+    },
+    top: {
+        sX: 488,
+        sY: 472,
+        w: 230,
+        h: 125,
+        ch: 33
+    },
+    gap: 40,
+    maxYPos: 10,
+    dx: 2,
+    draw: function(){
+        for(let i = 0; i<this.position.length; i++){
+            let p = this.position[i];
+            let topYPos = p.y;
+            let bottomYPos = p.y + this.top.ch + this.gap;
+            let bottomH = 130 - bottomYPos;
+            ctx.drawImage(sprite, this.top.sX, this.top.sY, this.top.w, this.top.h, (p.x-30), topYPos, this.top.w, this.top.ch);       
+            ctx.drawImage(sprite, this.bottom.sX, this.bottom.sY, this.bottom.w, this.bottom.h, p.x, bottomYPos, this.bottom.w, bottomH); 
+        }
+    },
+
+    update: function(){
+        if(state.current !== state.game) return;
+        if(frames%150 == 0){
+            this.position.push({
+                x: cvs.width,
+                y: this.maxYPos * (Math.random() + 1)
+            });
+        }        
+        for(let i = 0; i<this.position.length; i++){
+            let p = this.position[i];
+            p.x -= this.dx;
+        }
     }
 }
 
@@ -107,13 +158,16 @@ cvs.addEventListener("click",function(evt){
 function draw(){
     ctx.fillStyle =" #70c5ce";
     ctx.fillRect(0, 0, cvs.width, cvs.height);    
-    bg.draw();
+    bg.draw();    
+    obstacles.draw();
     character.draw();    
     over.draw();
 }
 
 function update(){
     character.update();
+    bg.update();
+    obstacles.update();
 }
 
 function loop(){
