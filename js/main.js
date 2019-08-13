@@ -85,8 +85,8 @@ const character={
                 if(this.x > cvs.width)              
                     state.current = state.win;
             }else{                
-                // this.speed += this.gravity;
-                // this.y += this.speed;
+                this.speed += this.gravity;
+                this.y += this.speed;
             }
         }
     }
