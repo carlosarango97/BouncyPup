@@ -1,13 +1,17 @@
 /* Labels */
+html, body{
+    background-color: blue;
+    margin: 0;
+}
 /* Sections */
 /* Identifiers */
 
 #level-1-canvas{
-    width: 320px;
-    height: 570px;
+    width: 1124px;
+    height: 1880px;
     border: 1px solid #000000;
     display: block;
-    margin: 0 auto;
+    margin: 0;
 }
 
 /* Class */
