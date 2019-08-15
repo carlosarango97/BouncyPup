@@ -1,0 +1,3 @@
+[0815/173302.056:ERROR:scoped_process_suspend.cc(31)] NtSuspendProcess: Se intentó obtener acceso a un proceso que está cerrándose. (0xc000010a)
+[0815/173302.201:ERROR:process_info.cc(118)] ReadProcessMemory bool __cdecl crashpad::(anonymous namespace)::ReadStruct(HANDLE, crashpad::WinVMAddress, T *) [T = crashpad::process_types::PEB<crashpad::process_types::internal::Traits64>]: Solo se completó una parte de una solicitud ReadProcessMemory o WriteProcessMemory. (0x12B)
+[0815/173302.235:ERROR:process_info.cc(551)] ReadProcessData failed

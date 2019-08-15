@@ -6,12 +6,12 @@ html, body{
 /* Sections */
 /* Identifiers */
 
-#level-1-canvas{
-    width: 1319px;
-    height: 1952px;
+#game-canvas{
+    width: 400px;
+    height: 700px;
     border: 1px solid #000000;
     display: block;
-    margin: 0;
+    margin: auto;
 }
 
 /* Class */

@@ -8,8 +8,9 @@ function page(pageOut, pageIn){
     window.scroll(0,document.getElementById(pageIn).scrollTop);
 }
 
-const cvs = document.getElementById("level-1-canvas");
+const cvs = document.getElementById("game-canvas");
 const ctx = cvs.getContext("2d");
+var stage = new createjs.Stage("game-canvas");
 
 let frames = 0;
 
@@ -18,8 +19,8 @@ let cantObstacles = 0;
 const sprite = new Image();
 sprite.src = "img/level1.png";
 
-const background = new Image();
-background.src = "img/fondoniv3.png";
+// const background = new Image();
+// background.src = "img/fondo.svg";
 
 const dog = new Image();
 dog.src = "img/perroniv3.png";
@@ -27,19 +28,28 @@ dog.src = "img/perroniv3.png";
 const imgObstacles = new Image();
 imgObstacles.src = "img/obstaculosniv3.png";
 
+var background = new createjs.Bitmap("img/fondoniv3.png");
+
+
 const bg={
-    sX : 5,
+    sX : 0,
     sY : 0,
-    w : 6395,
-    h : 2782,
+    w : 3031,
+    h : 1319,
     x : 0,
-    ch : 150,
-    cw: 1080,
+    ch : 1600,
+    cw: 12000,
     y : 0,
     dx: 2,
     draw: function(){
-        ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y, this.cw, this.ch);
-        ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x+this.cw, this.y, this.cw, this.ch);
+        // ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y, this.cw, this.ch);
+        // ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x+this.cw, this.y, this.cw, this.ch);
+        background.x = 0;
+        background.y = 0;
+        background.scale = 0.055;
+        background.scaleX = 0.2;
+        stage.addChild(background);
+        stage.update();
     },
     update: function(){
         if(state.current == state.game){
@@ -87,6 +97,10 @@ const character={
             }else{                
                 this.speed += this.gravity;
                 this.y += this.speed;
+                if(this.y<0){
+                    this.y = 0;
+                    this.speed = 0;
+                }
             }
         }
     }
