@@ -1,13 +1,13 @@
 /* Labels */
 html, body{
-    background-color: blue;
+    background-color: white;
     margin: 0;
 }
 /* Sections */
 /* Identifiers */
 
 #game-canvas{
-    width: 400px;
+    width: 422px;
     height: 700px;
     border: 1px solid #000000;
     display: block;

@@ -13,52 +13,51 @@ const ctx = cvs.getContext("2d");
 var stage = new createjs.Stage("game-canvas");
 
 let frames = 0;
-
+let level = 1;
 let cantObstacles = 0;
 
-const sprite = new Image();
-sprite.src = "img/level1.png";
+// const sprite = new Image();
+// sprite.src = "img/level1.png";
 
 // const background = new Image();
 // background.src = "img/fondo.svg";
 
-const dog = new Image();
-dog.src = "img/perroniv3.png";
+// const dog = new Image();
+// dog.src = "img/perroniv3.png";
 
-const imgObstacles = new Image();
+const imgObstacles23 = new Image();
 imgObstacles.src = "img/obstaculosniv3.png";
+const imgObstacles1 = new Image();
+imgObstacles1.src = "img/obtaculosniv3.png";
 
-var background = new createjs.Bitmap("img/fondoniv3.png");
+var background1 = new createjs.Bitmap("img/FONDONIVEL1.svg");
+var background2 = new createjs.Bitmap("img/FONDONIVEL2.svg");
+var background3 = new createjs.Bitmap("img/FONDONIVEL3.svg");
+var dog1 = new createjs.Bitmap("img/PERRONIVEL1.svg");
+var dog2 = new createjs.Bitmap("img/PERRONIVEL2.svg");
+var dog3 = new createjs.Bitmap("img/PERRONIVEL3.svg");
 
 
-const bg={
-    sX : 0,
-    sY : 0,
-    w : 3031,
-    h : 1319,
-    x : 0,
-    ch : 1600,
-    cw: 12000,
-    y : 0,
+const bg={   
+    back : level=1?background1:level=2?background2:background3,
     dx: 2,
-    draw: function(){
-        // ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y, this.cw, this.ch);
-        // ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x+this.cw, this.y, this.cw, this.ch);
-        background.x = 0;
-        background.y = 0;
-        background.scale = 0.055;
-        background.scaleX = 0.2;
-        stage.addChild(background);
+    draw: function(){        
+        this.back.x = 0;
+        this.back.y = 0;
+        this.back.scale = 1;
+        this.back.scaleX = 3;
+        stage.addChild(this.back);
         stage.update();
     },
     update: function(){
         if(state.current == state.game){
-            this.x = (this.x - this.dx) % this.cw;
+            this.back.x = (this.back.x - this.dx) % this.back.width;
         }
     }
 }
 
 const character={
+    charac : level=1?dog1:level=2?dog2:dog3,
     sX: 0,
     sY: 0,
     w: 1097,
@@ -72,7 +71,13 @@ const character={
     jump: 1.4, // Easy
     gravity: 0.08,
     draw: function(){
-        ctx.drawImage(dog, this.sX, this.sY, this.w, this.h, this.x, this.y, this.cw, this.ch);  
+        // ctx.drawImage(dog, this.sX, this.sY, this.w, this.h, this.x, this.y, this.cw, this.ch);  
+        this.charac.x = 50;
+        this.charac.y = 65;
+        this.charac.scale = 0.02;
+        this.charac.scaleX = 0.07;        
+        stage.addChild(this.charac);
+        stage.update();
     },
 
     flap: function(){
@@ -81,24 +86,29 @@ const character={
 
     update: function(){
         if(state.current == state.getReady){
-            this.y = 65;
+            this.charac.y = 65;
             this.speed = 0;
         }else{
-            if(this.y+this.ch/2>=130){
-                this.y=cvs.height- 20;
+            if(this.charac.y+this.charac.height/2>=130){
+                this.charac.y=cvs.height- 20;
                 if(state.current==state.game){
                     state.current = state.gameOver;
                     obstacles.clear();
                 }
             }if(state.current==state.beforeWin){
-                this.x +=2;  
-                if(this.x > cvs.width)              
+                this.charac.x +=2;  
+                if(this.charac.x > cvs.width) {             
                     state.current = state.win;
+                    if(level<3){
+                        level++;
+                    } else
+                        level = 1;
+                }
             }else{                
                 this.speed += this.gravity;
-                this.y += this.speed;
-                if(this.y<0){
-                    this.y = 0;
+                this.charac.y += this.speed;
+                if(this.charac.y<0){
+                    this.charac.y = 0;
                     this.speed = 0;
                 }
             }
@@ -106,6 +116,7 @@ const character={
     }
 }
 
+/* ¡¡¡PENDIENTE!!! */
 const over={
     sX: 882.5,
     sY: 0,
@@ -121,6 +132,7 @@ const over={
     }
 }
 
+/* ¡¡¡PENDIENTE!!! */
 const win = {
     sX: 882.5,
     sY: 0,
@@ -136,6 +148,7 @@ const win = {
     }
 }
 
+/* ¡¡¡PENDIENTE!!! */
 const obstacles = {
     position : [],
     bottom: {
@@ -186,17 +199,17 @@ const obstacles = {
             let p = this.position[i];
             p.x -= this.dx;
             let bottomObstacleYPos = p.y + this.top.ch + this.gap;
-            if(character.x + character.cw/2 > (p.x-30) && character.x< (p.x-30) + this.top.cw && character.y + character.ch/2 > p.y && character.y<p.y + this.top.ch){
+            if(character.charac.x + character.charac.width/2 > (p.x-30) && character.charac.x< (p.x-30) + this.top.cw && character.charac.y + character.charac.height/2 > p.y && character.charac.y<p.y + this.top.ch){
                 state.current = state.gameOver;
                 this.clear();
                 cantObstacles = 0;
             }
-            if(character.x + character.cw/2 > (p.x+40) && character.x - character.cw/2 < (p.x+40) + this.top.cw && character.y + character.ch/2 > (p.y-50) && character.y<(p.y-50) + this.top.ch){
+            if(character.charac.x + character.charac.width/2 > (p.x+40) && character.charac.x - character.charac.width/2 < (p.x+40) + this.top.cw && character.charac.y + character.charac.height/2 > (p.y-50) && character.charac.y<(p.y-50) + this.top.ch){
                 state.current = state.gameOver;
                 this.clear();
                 cantObstacles = 0;
             }
-            if(character.x  + character.cw/2 > p.x && character.x - character.cw/2 < p.x+this.bottom.cw && character.y + character.ch >bottomObstacleYPos && character.y - character.ch/2< bottomObstacleYPos + p.bh){
+            if(character.charac.x  + character.charac.width/2 > p.x && character.charac.x - character.charac.width/2 < p.x+this.bottom.cw && character.charac.y + character.charac.height >bottomObstacleYPos && character.charac.y - character.charac.height/2< bottomObstacleYPos + p.bh){
                 state.current = state.gameOver;
                 this.clear();
                 cantObstacles = 0;
@@ -221,6 +234,25 @@ const state = {
     win: 4
 }
 
+cvs.addEventListener("click",function(evt){
+    switch(state.current){
+        case state.getReady:
+            state.current = state.game;
+            break;
+        case state.game:
+            character.flap();
+            break;
+        case state.gameOver:
+            state.current = state.getReady;
+            break;
+        case state.win:
+            state.current = state.getReady;
+            obstacles.clear();
+            cantObstacles = 0;
+            character.charac.x = 50;
+    }
+});
+
 cvs.addEventListener("touchstart",function(evt){
     switch(state.current){
         case state.getReady:
@@ -236,7 +268,7 @@ cvs.addEventListener("touchstart",function(evt){
             state.current = state.getReady;
             obstacles.clear();
             cantObstacles = 0;
-            character.x = 50;
+            character.charac.x = 50;
     }
 });
 
