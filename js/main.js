@@ -345,13 +345,11 @@ cvs.addEventListener("click",function(evt){
             state.current = state.getReady;
             break;
         case state.win:
-            if(evt.clientX > 75 && evt.clientX < 225 && evt.clientY > 70 && evt.clientY<95){
-                state.current = state.getReady;
-                obstacles.clear();
-                cantObstacles = 0;
-                character.x = -40;
-                bg.x = 0;
-            }            
+            state.current = state.getReady;
+            obstacles.clear();
+            cantObstacles = 0;
+            character.x = -40;
+            bg.x = 0;           
     }
 });
 
@@ -367,13 +365,11 @@ cvs.addEventListener("touchstart",function(evt){
             state.current = state.getReady;
             break;
         case state.win:
-            if(evt.clientX > 75 && evt.clientX < 225 && evt.clientY > 70 && evt.clientY<95){
-                state.current = state.getReady;
-                obstacles.clear();
-                cantObstacles = 0;
-                character.x = -40;
-                bg.x = 0;
-            } 
+            state.current = state.getReady;
+            obstacles.clear();
+            cantObstacles = 0;
+            character.x = -40;
+            bg.x = 0;
     }
 });
 
