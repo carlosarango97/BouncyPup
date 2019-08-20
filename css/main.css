@@ -2,6 +2,9 @@
 html, body{
     background-color: white;
     margin: 0;
+    padding:0;
+    text-align:center;
+    height: 100%;
 }
 /* Sections */
 /* Identifiers */
@@ -20,9 +23,79 @@ html, body{
     display: none;
 }
 
+#initial-menu{
+    
+    
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    background-image: url(PANTALLAINICIO.svg);
+   
+    
+    
+   
+ 
+}
+
+
+#level-1{
+
+  
+   
+
+
+    
+
+    
+
+    
+}
+
+
+.imagen{
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+    width: 100%
+   
+
+
+
+}
+
+#btn1{
+
+    
+    position:absolute;
+    top:50%;
+    right:0%;
+    transform:translate(0%,-50%);
+    -ms-transform:translate(-0%,-50%);
+}
+
+#btn2{
+
+    position:absolute;
+    top:50%;
+    left:0%;
+    transform:translate(0%,-50%);
+    -ms-transform:translate(0%,-50%);
+}
+
+.boton{
+
+}
+
 @media screen and (max-width: 1500px){
     #game-canvas{        
         width: 1319px;
         height: 2010px;
     }
 }
+
+
+
+
