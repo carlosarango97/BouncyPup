@@ -182,15 +182,15 @@ const character={
             }if(state.current==state.beforeWin){
                 this.x +=2;  
                 if(this.x > cvs.width) {             
-                    state.current = state.win;
+                    state.current = state.endLevel1;
                     if(level.current == 1){
-                        state.current=state.endLevel1;
+                        
                         level.current = level.second;
                     } else if(level.current == 2){
-                        state.current=state.endLevel2
+                        
                         level.current = level.third;
                     } else{
-                        state.current=state.endLevel2;
+                        
                         level.current = level.first;
                     }
                 }
@@ -234,6 +234,21 @@ const over={
             stage.addChild(gameOver);
             stage.update();
         }        
+    }
+}
+
+const lev1={
+
+    draw: function(){
+        endLevel1.x = 0;
+        endLevel1.y = 0;
+        endLevel1.scale = 1;
+        endLevel1.scaleX = 3;
+        if(state.current == state.endLevel1){
+            stage.addChild(endLevel1);
+            stage.update();
+        }
+
     }
 }
 
