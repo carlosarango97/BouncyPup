@@ -263,6 +263,7 @@ const obstacles = {
             if(p.x + this.top.cw + 40 <= 0){
                 this.position.shift();
                 cantObstacles++;
+                document.getElementById("ladrido").play();
                 var nivel = level.current==level.first?5:level.current==level.second?7:10;
                 if(cantObstacles==nivel){
                     state.current = state.beforeWin;
