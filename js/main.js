@@ -27,7 +27,7 @@ let cantObstacles = 0;
 const imgObstacles23 = new Image();
 imgObstacles23.src = "img/obstaculosniv3.png";
 const imgObstacles1 = new Image();
-imgObstacles1.src = "img/obstaculosniv3.png";
+imgObstacles1.src = "img/OBSTACULOSNIVEL1.png";
 
 var background1 = new createjs.Bitmap("img/FONDONIVEL1.svg");
 var background2 = new createjs.Bitmap("img/FONDONIVEL2.svg");
@@ -136,7 +136,8 @@ const character={
             this.y = 15;
             this.speed = 0;
         }else{
-            if(this.charac.y+this.charac.getBounds().height/2>=130){
+            var nivel = level.current==level.first?140:130;
+            if(this.charac.y+this.charac.getBounds().height/2>=nivel){
                 this.y=cvs.height- 20;
                 if(state.current==state.game){
                     state.current = state.gameOver;
@@ -164,6 +165,13 @@ const character={
             }
         }
     }
+}
+
+const level = {
+    current : 1,
+    first : 1,
+    second: 2,
+    third : 3
 }
 
 /* ¡¡¡PENDIENTE!!! */
@@ -198,20 +206,20 @@ const win = {
 const obstacles = {
     position : [],
     bottom: {
-        sX: 7,
-        sY: 1843,
-        w: 412,
-        h: 466,
+        sX: level.current==level.first?2113:7,
+        sY: level.current==level.first?2539:1843,
+        w: level.current==level.first?2807:412,
+        h: level.current==level.first?1444:466,
         ch: 40,
-        cw: 100
+        cw: level.current==level.first?200:100
     },
     top: {
-        sX: 0,
-        sY: 539,
-        w: 1205,
-        h: 619,
+        sX: level.current==level.first?321:0, 
+        sY: level.current==level.first?41:539, 
+        w: level.current==level.first?984:1205, 
+        h: level.current==level.first?1365:619, 
         ch: 33,
-        cw: 150
+        cw: level.current==level.first?80:150
     },
     gap: 50,
     maxYPos: 2,
@@ -225,11 +233,18 @@ const obstacles = {
         }
         for(let i = 0; i<this.position.length; i++){
             let p = this.position[i];
-            let topYPos = p.y;
-            let bottomYPos = p.y + this.top.ch + this.gap;
-            p.bh = 135 - bottomYPos;
-            ctx.drawImage(imgObstacles, this.top.sX, this.top.sY, this.top.w, this.top.h, (p.x-30), topYPos, this.top.cw, this.top.ch);       
-            ctx.drawImage(imgObstacles, this.bottom.sX, this.bottom.sY, this.bottom.w, this.bottom.h, p.x, bottomYPos, this.bottom.cw, p.bh);             
+            if(level.current==level.first){
+                let bottomYPos = p.y + this.top.ch + this.gap;
+                p.bh = 150 - bottomYPos;
+                ctx.drawImage(imgObstacles, this.top.sX, this.top.sY, this.top.w, this.top.h, p.x, 0, this.top.cw, this.top.ch);     
+                ctx.drawImage(imgObstacles, this.bottom.sX, this.bottom.sY, this.bottom.w, this.bottom.h, (p.x-40), bottomYPos, this.bottom.cw, p.bh);               
+            }else{
+                let topYPos = p.y;
+                let bottomYPos = p.y + this.top.ch + this.gap;
+                p.bh = 135 - bottomYPos;
+                ctx.drawImage(imgObstacles, this.top.sX, this.top.sY, this.top.w, this.top.h, (p.x-30), topYPos, this.top.cw, this.top.ch);       
+                ctx.drawImage(imgObstacles, this.bottom.sX, this.bottom.sY, this.bottom.w, this.bottom.h, p.x, bottomYPos, this.bottom.cw, p.bh);             
+            }
         }
     },
 
@@ -260,7 +275,16 @@ const obstacles = {
                 this.clear();
                 cantObstacles = 0;
             }
-            if(p.x + this.top.cw + 40 <= 0){
+            if(level.current==level.first && p.x + this.bottom.cw + 40 <= 0){
+                this.position.shift();
+                cantObstacles++;
+                document.getElementById("ladrido").play();
+                var nivel = level.current==level.first?5:level.current==level.second?7:10;
+                if(cantObstacles==nivel){
+                    state.current = state.beforeWin;
+                }
+            }
+            if(level.current!=level.first && p.x + this.top.cw + 40 <= 0){
                 this.position.shift();
                 cantObstacles++;
                 document.getElementById("ladrido").play();
@@ -282,12 +306,6 @@ const state = {
     win: 4
 }
 
-const level = {
-    current : 1,
-    first : 1,
-    second: 2,
-    third : 3
-}
 
 cvs.addEventListener("click",function(evt){
     switch(state.current){

@@ -22,7 +22,7 @@ html, body{
 
 @media screen and (max-width: 1500px){
     #game-canvas{        
-        width: 1080px;
-        height: 1920px;
+        width: 1312px;
+        height: 1948px;
     }
 }
