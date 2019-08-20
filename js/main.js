@@ -98,7 +98,7 @@ const character={
     w: 0,
     speed: 0,
     // jump: 2.3, // Hard
-    jump: 1.4, // Easy
+    jump: 1, // Easy
     gravity: 0.08,
     draw: function(){
         if(level.current == 1){
@@ -233,7 +233,7 @@ const obstacles = {
         for(let i = 0; i<this.position.length; i++){
             let p = this.position[i];
             if(level.current==level.first){
-                let bottomYPos = p.y + this.top.ch + this.gap;
+                let bottomYPos = this.top.ch + this.gap;
                 p.bh = 150 - bottomYPos;
                 ctx.drawImage(imgObstacles, this.top.sX, this.top.sY, this.top.w, this.top.h, p.x, 0, this.top.cw, this.top.ch);     
                 ctx.drawImage(imgObstacles, this.bottom.sX, this.bottom.sY, this.bottom.w, this.bottom.h, (p.x-40), bottomYPos, this.bottom.cw, p.bh);               
@@ -263,17 +263,31 @@ const obstacles = {
         for(let i = 0; i<this.position.length; i++){
             let p = this.position[i];
             p.x -= this.dx;
-            let bottomObstacleYPos = p.y + this.top.ch + this.gap;
-            if(character.x + character.charac.getBounds().width/2 > (p.x-30) && character.x< (p.x-30) + this.top.cw && character.y + character.charac.getBounds().height*0.7/2 > p.y && character.y + character.charac.getBounds().height*0.7/2 <p.y + this.top.ch){
-                state.current = state.gameOver;
-                this.clear();
-                cantObstacles = 0;
-            }
-            if(character.charac.x  + character.charac.getBounds().width/2 > p.x && character.x - character.charac.getBounds().width/2 < p.x+this.bottom.cw && character.y + character.charac.getBounds().height*0.7/2 >bottomObstacleYPos && character.y - character.charac.getBounds().height*0.7/2< bottomObstacleYPos + p.bh){
-                state.current = state.gameOver;
-                this.clear();
-                cantObstacles = 0;
-            }
+            if(level.current==level.first){
+                let bottomObstacleYPos = this.top.ch + this.gap;
+                if(character.x + character.charac.getBounds().width/2 > p.x && character.x + character.charac.getBounds().width/2 < p.x + this.top.cw && character.y + character.charac.getBounds().height*0.7/2 > 0 && character.y + character.charac.getBounds().height*0.7/2 <0 + this.top.ch){
+                    state.current = state.gameOver;
+                    this.clear();
+                    cantObstacles = 0;
+                }
+                if(character.charac.x  + character.charac.getBounds().width/2 > (p.x-40) && character.x - character.charac.getBounds().width/2 < (p.x-40)+this.bottom.cw && character.y + character.charac.getBounds().height*0.7/2 >bottomObstacleYPos && character.y - character.charac.getBounds().height*0.7/2< bottomObstacleYPos + p.bh){
+                    state.current = state.gameOver;
+                    this.clear();
+                    cantObstacles = 0;
+                }
+            }else{
+                let bottomObstacleYPos = p.y + this.top.ch + this.gap;
+                if(character.x + character.charac.getBounds().width/2 > (p.x-30) && character.x< (p.x-30) + this.top.cw && character.y + character.charac.getBounds().height*0.7/2 > p.y && character.y + character.charac.getBounds().height*0.7/2 <p.y + this.top.ch){
+                    state.current = state.gameOver;
+                    this.clear();
+                    cantObstacles = 0;
+                }
+                if(character.charac.x  + character.charac.getBounds().width/2 > p.x && character.x - character.charac.getBounds().width/2 < p.x+this.bottom.cw && character.y + character.charac.getBounds().height*0.7/2 >bottomObstacleYPos && character.y - character.charac.getBounds().height*0.7/2< bottomObstacleYPos + p.bh){
+                    state.current = state.gameOver;
+                    this.clear();
+                    cantObstacles = 0;
+                }
+            }            
             if(level.current==level.first && p.x + this.bottom.cw + 40 <= 0){
                 this.position.shift();
                 cantObstacles++;

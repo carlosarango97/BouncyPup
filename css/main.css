@@ -23,6 +23,6 @@ html, body{
 @media screen and (max-width: 1500px){
     #game-canvas{        
         width: 1319px;
-        height: 1955px;
+        height: 1970px;
     }
 }
