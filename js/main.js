@@ -74,6 +74,9 @@ var dog2 = new createjs.Bitmap("img/PERRONIVEL2.svg");
 var dog3 = new createjs.Bitmap("img/PERRONIVEL3.svg");
 var gameOver = new createjs.Bitmap("img/PANTALLAGAMEOVER.svg");
 var winScreen = new createjs.Bitmap("img/PANTALLASIGNIVEL.svg");
+var endLevel1= new createjs.Bitmap("img/FINNIVEL1.svg");
+var endLevel2= new createjs.Bitmap("img/FINNIVEL2.svg");
+var endLevel3= new createjs.Bitmap("img/FINNIVEL3.svg");
 
 
 const bg={   
@@ -181,11 +184,13 @@ const character={
                 if(this.x > cvs.width) {             
                     state.current = state.win;
                     if(level.current == 1){
-                        
+                        state.current=state.endLevel1;
                         level.current = level.second;
                     } else if(level.current == 2){
+                        state.current=state.endLevel2
                         level.current = level.third;
                     } else{
+                        state.current=state.endLevel2;
                         level.current = level.first;
                     }
                 }
