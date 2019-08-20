@@ -20,3 +20,9 @@ html, body{
     display: none;
 }
 
+@media screen and (max-width: 1000px){
+    #game-canvas{        
+        width: 1080px;
+        height: 1920px;
+    }
+}
