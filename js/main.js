@@ -28,6 +28,8 @@ const imgObstacles23 = new Image();
 imgObstacles23.src = "img/obstaculosniv3.png";
 const imgObstacles1 = new Image();
 imgObstacles1.src = "img/OBSTACULOSNIVEL1.png";
+const botones = new Image();
+botones.src = "img/BOTONESPANTALLAS.png"
 
 var background1 = new createjs.Bitmap("img/FONDONIVEL1.svg");
 var background2 = new createjs.Bitmap("img/FONDONIVEL22.svg");
@@ -173,6 +175,16 @@ const level = {
     third : 3
 }
 
+const btns = {
+    nextLevel: function(){
+        var sY = 371;
+        var sX = 331;
+        var h = 257;
+        var w = 658;         
+        ctx.drawImage(botones,sX,sY,w,h,75,70,150,25);
+    }
+}
+
 /* ¡¡¡PENDIENTE!!! */
 const over={    
     draw: function(){
@@ -188,7 +200,7 @@ const over={
 }
 
 /* ¡¡¡PENDIENTE!!! */
-const win = {
+const win = {    
     draw: function(){
         winScreen.x = 0;
         winScreen.y = 0;
@@ -196,8 +208,9 @@ const win = {
         winScreen.scaleX = 3;
         if(state.current == state.win){
             stage.addChild(winScreen);
-            stage.update();
-        }        
+            stage.update();              
+            btns.nextLevel();
+        }  
     }
 }
 
@@ -332,11 +345,13 @@ cvs.addEventListener("click",function(evt){
             state.current = state.getReady;
             break;
         case state.win:
-            state.current = state.getReady;
-            obstacles.clear();
-            cantObstacles = 0;
-            character.x = -40;
-            bg.x = 0;
+            if(evt.clientX > 75 && evt.clientX < 225 && evt.clientY > 70 && evt.clientY<95){
+                state.current = state.getReady;
+                obstacles.clear();
+                cantObstacles = 0;
+                character.x = -40;
+                bg.x = 0;
+            }            
     }
 });
 
@@ -352,11 +367,13 @@ cvs.addEventListener("touchstart",function(evt){
             state.current = state.getReady;
             break;
         case state.win:
-            state.current = state.getReady;
-            obstacles.clear();
-            cantObstacles = 0;
-            character.x = -40;
-            bg.x = 0;
+            if(evt.clientX > 75 && evt.clientX < 225 && evt.clientY > 70 && evt.clientY<95){
+                state.current = state.getReady;
+                obstacles.clear();
+                cantObstacles = 0;
+                character.x = -40;
+                bg.x = 0;
+            } 
     }
 });
 
@@ -367,7 +384,7 @@ function draw(){
     character.draw();     
     obstacles.draw();   
     over.draw();
-    win.draw();
+    win.draw();  
 }
 
 function update(){
