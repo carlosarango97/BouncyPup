@@ -181,6 +181,7 @@ const character={
                 if(this.x > cvs.width) {             
                     state.current = state.win;
                     if(level.current == 1){
+                        state.current=state.gameOver;
                         level.current = level.second;
                     } else if(level.current == 2){
                         level.current = level.third;
