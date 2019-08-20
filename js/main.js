@@ -13,7 +13,6 @@ const ctx = cvs.getContext("2d");
 var stage = new createjs.Stage("game-canvas");
 
 let frames = 0;
-let level = 1;
 let cantObstacles = 0;
 
 // const sprite = new Image();
@@ -26,56 +25,97 @@ let cantObstacles = 0;
 // dog.src = "img/perroniv3.png";
 
 const imgObstacles23 = new Image();
-imgObstacles.src = "img/obstaculosniv3.png";
+imgObstacles23.src = "img/obstaculosniv3.png";
 const imgObstacles1 = new Image();
-imgObstacles1.src = "img/obtaculosniv3.png";
+imgObstacles1.src = "img/obstaculosniv3.png";
 
 var background1 = new createjs.Bitmap("img/FONDONIVEL1.svg");
 var background2 = new createjs.Bitmap("img/FONDONIVEL2.svg");
 var background3 = new createjs.Bitmap("img/FONDONIVEL3.svg");
+var background12 = new createjs.Bitmap("img/FONDONIVEL1.svg");
+var background22 = new createjs.Bitmap("img/FONDONIVEL2.svg");
+var background32 = new createjs.Bitmap("img/FONDONIVEL3.svg");
 var dog1 = new createjs.Bitmap("img/PERRONIVEL1.svg");
 var dog2 = new createjs.Bitmap("img/PERRONIVEL2.svg");
 var dog3 = new createjs.Bitmap("img/PERRONIVEL3.svg");
 
+var gameOver = new createjs.Bitmap("img/PANTALLAGAMEOVER.svg");
+var winScreen = new createjs.Bitmap("img/PANTALLASIGNIVEL.svg");
+
 
 const bg={   
-    back : level=1?background1:level=2?background2:background3,
+    back: null,    
     dx: 2,
-    draw: function(){        
-        this.back.x = 0;
+    x: 0,
+    x2: 0,
+    scale: 3,
+    draw: function(){ 
+        var back2;   
+        if(level.current == 1){
+            this.back = background1;
+            back2 = background12;
+        } else if(level.current == 2){
+            this.back = background2;
+            back2 = background22;
+        } else{
+            this.back = background3;
+            back2 = background32;
+        }
+        var scale_ = level.current!=level.first?1:1.1;
+        this.back.x = this.x;
         this.back.y = 0;
-        this.back.scale = 1;
-        this.back.scaleX = 3;
+        this.back.scale = scale_;
+        this.back.scaleX = this.scale;
+        back2.x = this.x2;
+        back2.y = 0;
+        back2.scale = scale_;
+        back2.scaleX = this.scale;
         stage.addChild(this.back);
+        stage.addChild(back2);
         stage.update();
     },
     update: function(){
+        if(level.current == 1){
+            this.back = background1;
+        } else if(level.current == 2){
+            this.back = background2;
+        } else{
+            this.back = background3;
+        }
         if(state.current == state.game){
-            this.back.x = (this.back.x - this.dx) % this.back.width;
+            this.x = (this.x - this.dx) % (this.back.getBounds().width*this.scale);
+            this.x2 = this.back.getBounds().width*this.scale + this.x;
+            // this.back.x = pos;
+            // stage.addChild(this.back);
+            // stage.update();
         }
     }
 }
 
 const character={
-    charac : level=1?dog1:level=2?dog2:dog3,
-    sX: 0,
-    sY: 0,
-    w: 1097,
-    h: 991,
-    ch: 20,
-    cw: 80, 
-    y: 65, 
-    x:  50,
+    charac: null,    
+    y: 15, 
+    x: -40,
+    w: 0,
     speed: 0,
     // jump: 2.3, // Hard
     jump: 1.4, // Easy
     gravity: 0.08,
     draw: function(){
-        // ctx.drawImage(dog, this.sX, this.sY, this.w, this.h, this.x, this.y, this.cw, this.ch);  
-        this.charac.x = 50;
-        this.charac.y = 65;
-        this.charac.scale = 0.02;
-        this.charac.scaleX = 0.07;        
+        if(level.current == 1){
+            this.charac = dog1;
+        } else if(level.current == 2){
+            this.charac = dog2;
+            // this.w = dog2.getBounds().width;
+        } else{
+            this.charac = dog3;
+            // this.w = dog3.getBounds().width;
+        }
+        this.charac.x = this.x;
+        this.charac.y = this.y;
+        this.charac.scale = 0.7;
+        this.charac.scaleX = 2; 
+        // this.w = this.charac.getBounds().width;            
         stage.addChild(this.charac);
         stage.update();
     },
@@ -85,30 +125,40 @@ const character={
     },
 
     update: function(){
+        if(level.current == 1){
+            this.charac = dog1;       
+        } else if(level.current == 2){
+            this.charac = dog2;
+        } else{
+            this.charac = dog3;
+        }
         if(state.current == state.getReady){
-            this.charac.y = 65;
+            this.y = 15;
             this.speed = 0;
         }else{
-            if(this.charac.y+this.charac.height/2>=130){
-                this.charac.y=cvs.height- 20;
+            if(this.charac.y+this.charac.getBounds().height/2>=130){
+                this.y=cvs.height- 20;
                 if(state.current==state.game){
                     state.current = state.gameOver;
                     obstacles.clear();
                 }
             }if(state.current==state.beforeWin){
-                this.charac.x +=2;  
-                if(this.charac.x > cvs.width) {             
+                this.x +=2;  
+                if(this.x > cvs.width) {             
                     state.current = state.win;
-                    if(level<3){
-                        level++;
-                    } else
-                        level = 1;
+                    if(level.current == 1){
+                        level.current = level.second;
+                    } else if(level.current == 2){
+                        level.current = level.third;
+                    } else{
+                        level.current = level.first;
+                    }
                 }
             }else{                
                 this.speed += this.gravity;
-                this.charac.y += this.speed;
-                if(this.charac.y<0){
-                    this.charac.y = 0;
+                this.y += this.speed;
+                if(this.y<-40){
+                    this.y = -40;
                     this.speed = 0;
                 }
             }
@@ -117,34 +167,30 @@ const character={
 }
 
 /* ¡¡¡PENDIENTE!!! */
-const over={
-    sX: 882.5,
-    sY: 0,
-    w: 320,
-    h: 570,
-    x: 0,
-    y: 0,
-    ch: 150,
-    cw: 320,
+const over={    
     draw: function(){
-        if(state.current == state.gameOver)
-            ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.cw, this.ch);       
+        gameOver.x = 0;
+        gameOver.y = 0;
+        gameOver.scale = 1;
+        gameOver.scaleX = 3;
+        if(state.current == state.gameOver){
+            stage.addChild(gameOver);
+            stage.update();
+        }        
     }
 }
 
 /* ¡¡¡PENDIENTE!!! */
 const win = {
-    sX: 882.5,
-    sY: 0,
-    w: 320,
-    h: 570,
-    x: 0,
-    y: 0,
-    ch: 150,
-    cw: 320,
     draw: function(){
-        if(state.current == state.win)
-            ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.cw, this.ch);       
+        winScreen.x = 0;
+        winScreen.y = 0;
+        winScreen.scale = 1;
+        winScreen.scaleX = 3;
+        if(state.current == state.win){
+            stage.addChild(winScreen);
+            stage.update();
+        }        
     }
 }
 
@@ -171,14 +217,19 @@ const obstacles = {
     maxYPos: 2,
     dx: 2,
     draw: function(){
+        var imgObstacles;        
+        if(level.current == level.first){
+            imgObstacles = imgObstacles1;
+        } else {
+            imgObstacles = imgObstacles23;
+        }
         for(let i = 0; i<this.position.length; i++){
             let p = this.position[i];
             let topYPos = p.y;
             let bottomYPos = p.y + this.top.ch + this.gap;
             p.bh = 135 - bottomYPos;
             ctx.drawImage(imgObstacles, this.top.sX, this.top.sY, this.top.w, this.top.h, (p.x-30), topYPos, this.top.cw, this.top.ch);       
-            ctx.drawImage(imgObstacles, this.bottom.sX, this.bottom.sY, this.bottom.w, this.bottom.h, p.x, bottomYPos, this.bottom.cw, p.bh); 
-            ctx.drawImage(imgObstacles, this.top.sX, this.top.sY, this.top.w, this.top.h, (p.x+40), (topYPos-50), this.top.cw, this.top.ch);          
+            ctx.drawImage(imgObstacles, this.bottom.sX, this.bottom.sY, this.bottom.w, this.bottom.h, p.x, bottomYPos, this.bottom.cw, p.bh);             
         }
     },
 
@@ -199,17 +250,12 @@ const obstacles = {
             let p = this.position[i];
             p.x -= this.dx;
             let bottomObstacleYPos = p.y + this.top.ch + this.gap;
-            if(character.charac.x + character.charac.width/2 > (p.x-30) && character.charac.x< (p.x-30) + this.top.cw && character.charac.y + character.charac.height/2 > p.y && character.charac.y<p.y + this.top.ch){
+            if(character.x + character.charac.getBounds().width/2 > (p.x-30) && character.x< (p.x-30) + this.top.cw && character.y + character.charac.getBounds().height*0.7/2 > p.y && character.y + character.charac.getBounds().height*0.7/2 <p.y + this.top.ch){
                 state.current = state.gameOver;
                 this.clear();
                 cantObstacles = 0;
             }
-            if(character.charac.x + character.charac.width/2 > (p.x+40) && character.charac.x - character.charac.width/2 < (p.x+40) + this.top.cw && character.charac.y + character.charac.height/2 > (p.y-50) && character.charac.y<(p.y-50) + this.top.ch){
-                state.current = state.gameOver;
-                this.clear();
-                cantObstacles = 0;
-            }
-            if(character.charac.x  + character.charac.width/2 > p.x && character.charac.x - character.charac.width/2 < p.x+this.bottom.cw && character.charac.y + character.charac.height >bottomObstacleYPos && character.charac.y - character.charac.height/2< bottomObstacleYPos + p.bh){
+            if(character.charac.x  + character.charac.getBounds().width/2 > p.x && character.x - character.charac.getBounds().width/2 < p.x+this.bottom.cw && character.y + character.charac.getBounds().height*0.7/2 >bottomObstacleYPos && character.y - character.charac.getBounds().height*0.7/2< bottomObstacleYPos + p.bh){
                 state.current = state.gameOver;
                 this.clear();
                 cantObstacles = 0;
@@ -217,7 +263,8 @@ const obstacles = {
             if(p.x + this.top.cw + 40 <= 0){
                 this.position.shift();
                 cantObstacles++;
-                if(cantObstacles==10){
+                var nivel = level.current==level.first?5:level.current==level.second?7:10;
+                if(cantObstacles==nivel){
                     state.current = state.beforeWin;
                 }
             }
@@ -232,6 +279,13 @@ const state = {
     gameOver: 2,
     beforeWin: 3,
     win: 4
+}
+
+const level = {
+    current : 1,
+    first : 1,
+    second: 2,
+    third : 3
 }
 
 cvs.addEventListener("click",function(evt){
@@ -249,7 +303,8 @@ cvs.addEventListener("click",function(evt){
             state.current = state.getReady;
             obstacles.clear();
             cantObstacles = 0;
-            character.charac.x = 50;
+            character.x = -40;
+            bg.x = 0;
     }
 });
 
@@ -268,16 +323,17 @@ cvs.addEventListener("touchstart",function(evt){
             state.current = state.getReady;
             obstacles.clear();
             cantObstacles = 0;
-            character.charac.x = 50;
+            character.x = -40;
+            bg.x = 0;
     }
 });
 
 function draw(){
     ctx.fillStyle =" #70c5ce";
     ctx.fillRect(0, 0, cvs.width, cvs.height);    
-    bg.draw();    
-    obstacles.draw();
-    character.draw();    
+    bg.draw();
+    character.draw();     
+    obstacles.draw();   
     over.draw();
     win.draw();
 }
