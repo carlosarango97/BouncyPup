@@ -31,10 +31,10 @@ imgObstacles1.src = "img/OBSTACULOSNIVEL1.png";
 
 var background1 = new createjs.Bitmap("img/FONDONIVEL1.svg");
 var background2 = new createjs.Bitmap("img/FONDONIVEL22.svg");
-var background3 = new createjs.Bitmap("img/FONDONIVEL32.svg");
+var background3 = new createjs.Bitmap("img/FONDONIVEL33.svg");
 var background12 = new createjs.Bitmap("img/FONDONIVEL1.svg");
 var background22 = new createjs.Bitmap("img/FONDONIVEL22.svg");
-var background32 = new createjs.Bitmap("img/FONDONIVEL32.svg");
+var background32 = new createjs.Bitmap("img/FONDONIVEL33.svg");
 var dog1 = new createjs.Bitmap("img/PERRONIVEL1.svg");
 var dog2 = new createjs.Bitmap("img/PERRONIVEL2.svg");
 var dog3 = new createjs.Bitmap("img/PERRONIVEL3.svg");
