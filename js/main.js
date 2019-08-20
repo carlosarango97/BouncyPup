@@ -167,7 +167,7 @@ const character={
 }
 
 const level = {
-    current : 2,
+    current : 1,
     first : 1,
     second: 2,
     third : 3
