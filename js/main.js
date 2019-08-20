@@ -30,15 +30,14 @@ const imgObstacles1 = new Image();
 imgObstacles1.src = "img/OBSTACULOSNIVEL1.png";
 
 var background1 = new createjs.Bitmap("img/FONDONIVEL1.svg");
-var background2 = new createjs.Bitmap("img/FONDONIVEL2.svg");
-var background3 = new createjs.Bitmap("img/FONDONIVEL3.svg");
+var background2 = new createjs.Bitmap("img/FONDONIVEL22.svg");
+var background3 = new createjs.Bitmap("img/FONDONIVEL32.svg");
 var background12 = new createjs.Bitmap("img/FONDONIVEL1.svg");
-var background22 = new createjs.Bitmap("img/FONDONIVEL2.svg");
-var background32 = new createjs.Bitmap("img/FONDONIVEL3.svg");
+var background22 = new createjs.Bitmap("img/FONDONIVEL22.svg");
+var background32 = new createjs.Bitmap("img/FONDONIVEL32.svg");
 var dog1 = new createjs.Bitmap("img/PERRONIVEL1.svg");
 var dog2 = new createjs.Bitmap("img/PERRONIVEL2.svg");
 var dog3 = new createjs.Bitmap("img/PERRONIVEL3.svg");
-
 var gameOver = new createjs.Bitmap("img/PANTALLAGAMEOVER.svg");
 var winScreen = new createjs.Bitmap("img/PANTALLASIGNIVEL.svg");
 
@@ -61,7 +60,7 @@ const bg={
             this.back = background3;
             back2 = background32;
         }
-        var scale_ = level.current!=level.first?1:1.1;
+        var scale_ = 1.1;
         this.back.x = this.x;
         this.back.y = 0;
         this.back.scale = scale_;
@@ -168,7 +167,7 @@ const character={
 }
 
 const level = {
-    current : 1,
+    current : 2,
     first : 1,
     second: 2,
     third : 3
