@@ -33,6 +33,9 @@ function showDivs(n) {
   x[slideIndex-1].style.display = "block";  
 }
     
+function nivel(lev){
+    level.current = lev;
+}
 
 function credits(){
 
