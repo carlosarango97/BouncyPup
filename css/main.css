@@ -14,7 +14,6 @@ html, body{
     height: 614px;
     border: 1px solid #000000;
     display: block;
-    margin: auto;
 }
 
 /* Class */
@@ -29,7 +28,8 @@ html, body{
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100%;
+    height: 99%;
+    width: 31%;
     background-image: url(PANTALLAINICIO.svg);
    
     
@@ -57,9 +57,9 @@ html, body{
 
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: cover;
+    /* background-size: cover; */
     height: auto;
-    width: 100%
+    width: 31%
    
 
 
@@ -71,7 +71,7 @@ html, body{
     
     position:absolute;
     top:50%;
-    right:0%;
+    right: 69%;
     transform:translate(0%,-50%);
     -ms-transform:translate(-0%,-50%);
 }
@@ -88,12 +88,12 @@ html, body{
 .buton{
 
     font-family: 'Hammersmith One', sans-serif;
-    font-size: 80px;
+    font-size: 44px;
     color: white;
     text-align: center;
     border-radius: 8px;
     background:#99d6ff;
-    padding: 50px 50px 50px 50px;
+    padding: 5px;
     border: none;
 
 }
