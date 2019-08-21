@@ -79,6 +79,7 @@ var gameOver = new createjs.Bitmap("img/PANTALLAGAMEOVER.svg");
 var winScreen = new createjs.Bitmap("img/PANTALLASIGNIVEL.svg");
 
 
+
 const bg={   
     back: null,    
     dx: 2,
@@ -186,8 +187,10 @@ const character={
                     if(level.current == 1){
                         level.current = level.second;
                     } else if(level.current == 2){
+                        
                         level.current = level.third;
                     } else{
+                        
                         level.current = level.first;
                     }
                 }
@@ -233,6 +236,7 @@ const over={
         }        
     }
 }
+
 
 /* ¡¡¡PENDIENTE!!! */
 const win = {    

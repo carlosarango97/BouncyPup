@@ -85,7 +85,16 @@ html, body{
     -ms-transform:translate(0%,-50%);
 }
 
-.boton{
+.buton{
+
+    font-family: 'Hammersmith One', sans-serif;
+    font-size: 80px;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    background:#99d6ff;
+    padding: 50px 50px 50px 50px;
+    border: none;
 
 }
 
