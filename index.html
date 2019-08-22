@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.32, maximum-scale=0.32, user-scalable=0"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"> 
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>BouncyPup</title>
@@ -12,37 +12,27 @@
 <body>    
     <!-- In this section we gonna make the game index (main) -->
     <section id="initial-menu" class="menu " >
-        
-        
-
-      
-        
     </section>
 
     <!-- In this section the map will be -->
-    <section id="map" class="invisible">
-        
-       
+    <section id="map" class="invisible">    
         <div>
             <img src="img/part1.svg" class="slides imagen" onclick="page('map','game-section'); nivel(1);">
             <img src="img/pt2.svg" class="slides imagen" onclick="page('map','game-section'); nivel(2);">
             <img src="img/pt3.svg" class="slides imagen" onclick="page('map','game-section'); nivel(3);">
         </div>
-        
         <button id="btn1" class="buton" onclick="plusDivs(1)">&#10095;</button>
         <button id="btn2" class="buton" onclick="plusDivs(-1)">&#10094;</button>
-        
-        
-
     </section>
-    <!-- In this section, the player can choose the character for each level -->
-    <section id="character-selector" class="invisible"></section>
     <!-- In this section, the user can set the basic configurations -->
     <section id="settings" class="invisible"></section>
     <!-- Game -->
     <section id="game-section" class="invisible">
         <canvas id="game-canvas"></canvas>
         <audio id="ladrido" src="img/ladrido.mp3"></audio>
+    </section>
+    <section id="game-over" class="invisible">
+        <img src="img/PANTALLAGAMEOVER.svg" class="imagen" onclick="page('map','game-section');">
     </section>
     <script src="js/main.js"></script>   
 </body>

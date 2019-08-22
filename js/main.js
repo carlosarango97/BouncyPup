@@ -34,7 +34,7 @@ function showDivs(n) {
 }
     
 function nivel(lev){
-    level.current = lev;
+    level.current = lev==1?level.first:lev==2?level.second:level.third;
 }
 
 function credits(){
@@ -77,9 +77,6 @@ var dog2 = new createjs.Bitmap("img/PERRONIVEL2.svg");
 var dog3 = new createjs.Bitmap("img/PERRONIVEL3.svg");
 var gameOver = new createjs.Bitmap("img/PANTALLAGAMEOVER.svg");
 var winScreen = new createjs.Bitmap("img/PANTALLASIGNIVEL.svg");
-
-
-
 const bg={   
     back: null,    
     dx: 2,
@@ -172,13 +169,21 @@ const character={
         if(state.current == state.getReady){
             this.y = 15;
             this.speed = 0;
+        }else if(state.current == state.BeforeGameOver){
+            this.speed += this.gravity;
+            this.y += this.speed;
+            if(this.y>cvs.height){
+                obstacles.clear();
+                cantObstacles = 0;
+                page('game-section','game-over');
+                state.current = state.gameOver;
+            }
         }else{
-            var nivel = level.current==level.first?140:130;
+            var nivel = level.current==level.first?150:135;
             if(this.charac.y+this.charac.getBounds().height/2>=nivel){
                 this.y=cvs.height- 20;
                 if(state.current==state.game){
-                    state.current = state.gameOver;
-                    obstacles.clear();
+                    state.current = state.BeforeGameOver;
                 }
             }if(state.current==state.beforeWin){
                 this.x +=2;  
@@ -186,8 +191,7 @@ const character={
                     state.current = state.win;
                     if(level.current == 1){
                         level.current = level.second;
-                    } else if(level.current == 2){
-                        
+                    } else if(level.current == 2){                        
                         level.current = level.third;
                     } else{
                         
@@ -225,16 +229,16 @@ const btns = {
 
 /* ¡¡¡PENDIENTE!!! */
 const over={    
-    draw: function(){
-        gameOver.x = 0;
-        gameOver.y = 0;
-        gameOver.scale = 1;
-        gameOver.scaleX = 3;
-        if(state.current == state.gameOver){
-            stage.addChild(gameOver);
-            stage.update();
-        }        
-    }
+    // draw: function(){
+    //     gameOver.x = 0;
+    //     gameOver.y = 0;
+    //     gameOver.scale = 1;
+    //     gameOver.scaleX = 3;
+    //     if(state.current == state.gameOver){
+    //         stage.addChild(gameOver);
+    //         stage.update();
+    //     }        
+    // }    
 }
 
 
@@ -276,6 +280,16 @@ const obstacles = {
     maxYPos: 2,
     dx: 2,
     draw: function(){
+        this.bottom.sX = level.current==level.first?2113:7;
+        this.bottom.sY = level.current==level.first?2539:1843;
+        this.bottom.w = level.current==level.first?2807:412;
+        this.bottom.h = level.current==level.first?1444:466;
+        this.bottom.cw = level.current==level.first?200:100;
+        this.top.sX = level.current==level.first?321:0;
+        this.top.sY = level.current==level.first?41:539;
+        this.top.w = level.current==level.first?984:1205;
+        this.top.h = level.current==level.first?1365:619;
+        this.top.cw = level.current==level.first?80:150;
         var imgObstacles;        
         if(level.current == level.first){
             imgObstacles = imgObstacles1;
@@ -318,26 +332,18 @@ const obstacles = {
             if(level.current==level.first){
                 let bottomObstacleYPos = this.top.ch + this.gap;
                 if(character.x + character.charac.getBounds().width/2 > p.x && character.x + character.charac.getBounds().width/2 < p.x + this.top.cw && character.y + character.charac.getBounds().height*0.7/2 > 0 && character.y + character.charac.getBounds().height*0.7/2 <0 + this.top.ch){
-                    state.current = state.gameOver;
-                    this.clear();
-                    cantObstacles = 0;
+                    state.current = state.BeforeGameOver;                   
                 }
                 if(character.charac.x  + character.charac.getBounds().width/2 > (p.x-40) && character.x - character.charac.getBounds().width/2 < (p.x-40)+this.bottom.cw && character.y + character.charac.getBounds().height*0.7/2 >bottomObstacleYPos && character.y - character.charac.getBounds().height*0.7/2< bottomObstacleYPos + p.bh){
-                    state.current = state.gameOver;
-                    this.clear();
-                    cantObstacles = 0;
+                    state.current = state.BeforeGameOver;
                 }
             }else{
                 let bottomObstacleYPos = p.y + this.top.ch + this.gap;
-                if(character.x + character.charac.getBounds().width/2 > (p.x-30) && character.x< (p.x-30) + this.top.cw && character.y + character.charac.getBounds().height*0.7/2 > p.y && character.y + character.charac.getBounds().height*0.7/2 <p.y + this.top.ch){
-                    state.current = state.gameOver;
-                    this.clear();
-                    cantObstacles = 0;
+                if(character.x + character.charac.getBounds().width > (p.x-30) && character.x< (p.x-30) + this.top.cw && character.y + character.charac.getBounds().height*0.6/2 > p.y && character.y + character.charac.getBounds().height*0.6/2 <p.y + this.top.ch){
+                    state.current = state.BeforeGameOver;
                 }
-                if(character.charac.x  + character.charac.getBounds().width/2 > p.x && character.x - character.charac.getBounds().width/2 < p.x+this.bottom.cw && character.y + character.charac.getBounds().height*0.7/2 >bottomObstacleYPos && character.y - character.charac.getBounds().height*0.7/2< bottomObstacleYPos + p.bh){
-                    state.current = state.gameOver;
-                    this.clear();
-                    cantObstacles = 0;
+                if(character.charac.x  + character.charac.getBounds().width > p.x && character.x - character.charac.getBounds().width < p.x+this.bottom.cw && character.y + character.charac.getBounds().height*0.7/2 >bottomObstacleYPos && character.y - character.charac.getBounds().height/2< bottomObstacleYPos + p.bh){
+                    state.current = state.BeforeGameOver;
                 }
             }            
             if(level.current==level.first && p.x + this.bottom.cw + 40 <= 0){
@@ -368,7 +374,8 @@ const state = {
     game: 1,
     gameOver: 2,
     beforeWin: 3,
-    win: 4
+    win: 4,
+    beforeGameOver: 5
 }
 
 
@@ -412,13 +419,17 @@ cvs.addEventListener("touchstart",function(evt){
     }
 });
 
+document.getElementById("game-over").addEventListener("touchstart", function(evt){
+    page('game-over','game-section');
+});
+
 function draw(){
     ctx.fillStyle =" #70c5ce";
     ctx.fillRect(0, 0, cvs.width, cvs.height);    
     bg.draw();
     character.draw();     
     obstacles.draw();   
-    over.draw();
+    //over.draw();
     win.draw();  
 }
 
