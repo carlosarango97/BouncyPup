@@ -1,13 +1,55 @@
-var j = 0;
+var xBackground = 0;
+var gravity = 0.1;
+var speed = 60;
+var jump = 8;
 var idBackground;
-function background(){  
-    idBackground = setInterval("move()",15);
-    console.log(idBackground);
+var idCharacter;
+var idObstacles;
+var document_character = document.getElementById("character");
+var game = document.getElementById("game");
+var topObstacle = document.getElementById("top");
+var bottomObstacle = document.getElementById("bottom");
+var top2Obstacle = document.getElementById("top2");
+var bottom2Obstacle = document.getElementById("bottom2");
+var xObstacles = 4;
+function animation_game(){  
+    idBackground = setInterval("background()",5);
+    idCharacter = setInterval("character()",0);
+    idObstacles = setInterval("obstacles()",10);
 }
 
-function move(){
-    document.getElementById("game").style.backgroundPositionX = j + "px";
-    j--;
+function background(){
+    game.style.backgroundPositionX = xBackground + "px";
+    xBackground--;
+}
+
+function obstacles(){
+    if(xObstacles == 222){
+        xObstacles = -68;
+    }
+    topObstacle.style.right = xObstacles + "%";
+    bottomObstacle.style.right = xObstacles + "%";
+    top2Obstacle.style.right = (xObstacles-120) + "%";
+    bottom2Obstacle.style.right = (xObstacles-120) + "%";
+    xObstacles++;
+}
+
+function character(){    
+    speed -= gravity;
+    document_character.style.bottom = speed + "%";
+    if(parseInt(document_character.style.bottom.split("%")[0])<8){
+        state.current = state.getReady;
+        clearInterval(idBackground);
+        clearInterval(idCharacter);
+        clearInterval(idObstacles);
+    }
+    if(parseInt(document_character.style.bottom.split("%")[0])>85){
+        speed = 85;
+    }
+}
+
+function flap(){
+    speed += jump;
 }
 
 const state = {
@@ -19,10 +61,9 @@ const state = {
 document.getElementById("game").addEventListener("click", function() {
     if(state.current == state.getReady){
         state.current = state.ingame;
-        background();
+        animation_game();
     }else{
-        state.current = state.getReady;
-        clearInterval(idBackground);
+        flap();
     }
 });
 
