@@ -33,14 +33,38 @@
     <section id="game-over" class="invisible">
         <img src="img/PANTALLAGAMEOVER.svg" class="imagen" onclick="page('map','game-section');">
     </section> -->
-    <section id="game-section">        
+    <section id="initial-menu">
+        <div id="index">
+            <img src="img/BtnMenu.png" class="btnIndex" onclick="page('initial-menu','game-section');start();document.getElementById('btnPause').className+=' invisible';">
+            <img src="img/BtnCreditos.png" class="btnIndex" onclick="page('initial-menu','credits');">
+        </div>
+    </section>
+    <section id="credits" class="invisible">
+        <div id="credits-page">
+            <img src="img/BtnMenu.png" class="btnIndex" onclick="page('credits','initial-menu');">
+        </div>
+    </section>
+    <section id="pause-page" class="invisible">
+        <div id="pause-div">
+            <img src="img/BtnContinue.png" class="btnIndex" onclick="continue_game();">
+            <img src="img/BtnMenu.png" class="btnIndex" onclick="page('pause-page','initial-menu'); menu();">
+        </div>
+    </section>
+    <section id="game-over" class="invisible">
+        <div id="game-over-div">
+            <img src="img/BtnTryAgain.png" class="btnIndex" onclick="page('game-over','game-section');start();document.getElementById('btnPause').className+=' invisible';">
+            <img src="img/BtnMenu.png" class="btnIndex" onclick="page('game-over','initial-menu'); menu();">
+        </div>
+    </section>
+    <section id="game-section" class="invisible">        
         <div id="game">
             <img src="img/Nube.png" id="top">            
             <img src="img/Hidrante.png" id="bottom">
             <img src="img/Nube.png" id="top2">            
             <img src="img/Hidrante.png" id="bottom2">
             <img src="img/Personaje nivel 2.png" id="character">
-            <!-- <img src="img/obstaculosniv3.png" id="bottom"> -->
+            <img src="img/pause.png" onclick="pause();document.getElementById('number').classList.remove('invisible','start-title');document.getElementById('btnPause').className+=' invisible';state.current = state.pause;" id="btnPause" class="invisible">
+            <span id="number">3</span>
         </div>
     </section>
     <script src="js/main.js"></script>   

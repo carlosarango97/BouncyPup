@@ -3,7 +3,58 @@ html, body{
     align-items:center;
     height: 682px;
     width: 424px;
-    
+
+}
+
+section{
+    overflow: hidden;
+}
+
+.invisible{
+    display: none !important;
+}
+
+.btnIndex{
+    width: 55%;
+    margin-bottom: 5%;
+}
+
+#number{
+    font-family: Numbers;
+    font-size: 10rem;
+    position: absolute;
+    top: 42%;
+    left: 45%;
+}
+
+.start-title{
+    font-size: 6rem !important;
+    top: 39% !important;
+    left: 29% !important;
+}
+
+#credits-page{
+    width: 424px;
+    height: 682px;
+    background-image: url("credits.png");
+    padding-top: 128%;
+    padding-left: 23%;
+}
+
+#pause-div{
+    width: 424px;
+    height: 682px;
+    background-image: url("pause.png");
+    padding-top: 86%;
+    padding-left: 23%;
+}
+
+#game-over-div{
+    width: 424px;
+    height: 682px;
+    background-image: url("../img/game-over.png");
+    padding-top: 86%;
+    padding-left: 23%;
 }
 
 #game{
@@ -11,46 +62,65 @@ html, body{
     height: 682px;
     background-image: url("backgroundlevel2.png");
     background-position-x: 0px;
-    border: 1px;
-    border-color: black;
     position: relative;
+    overflow: hidden;
+}
+
+#btnPause{
+    width: 10%;
+    position: absolute;
+    top: 2%;
+    right: 5%;
+}
+
+#index{
+    width: 424px;
+    height: 682px;      
+    padding-top: 73%;
+    padding-left: 22%;
+    background-image: url("Initial-page.png");
 }
 
 #character {
     width: 126.59px;
-    position: fixed;
+    position: absolute;
     bottom: 60%;
     left: 10%;
 }
 
 #top {
-    position: fixed;
+    position: absolute;
     width: 286.95px;
     top: 68.2px;
-    right: -2%;
+    right: -90%;
 }
 
 #bottom {
     width: 126.59px;
     bottom: 54.56px;
     height: 27%;
-    position: fixed;
-    right: -2%;
+    position: absolute;
+    right: -90%;
 }
 
 #top2 {
-    position: fixed;
+    position: absolute;
     width: 68%;
     top: 0%;
-    right: -102%;
+    right: -190%;
 }
 
 #bottom2 {
     width: 30%;
     bottom: 8%;
     height: 37%;
-    position: fixed;
-    right: -102%;
+    position: absolute;
+    right: -190%;
+}
+
+@font-face{
+    font-family: Numbers;
+    src: url(Zuka\ Doodle.ttf);
 }
 
 /* #game-canvas{
@@ -81,12 +151,6 @@ html, body{
     left:0%;
     transform:translate(0%,-50%);
     -ms-transform:translate(0%,-50%);
-}
-
-
-
-.invisible{
-    display: none;
 }
 
 .imagen{
