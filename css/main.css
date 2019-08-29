@@ -33,9 +33,16 @@ section{
     left: 29% !important;
 }
 
+.btnStart{
+    width: 76%;
+    position: absolute;
+    top: 31%;
+    left: 14%;
+}
+
 #credits-page{
     width: 424px;
-    height: 682px;
+    height: 137px;
     background-image: url("credits.png");
     padding-top: 128%;
     padding-left: 23%;
@@ -43,7 +50,7 @@ section{
 
 #pause-div{
     width: 424px;
-    height: 682px;
+    height: 314px;
     background-image: url("pause.png");
     padding-top: 86%;
     padding-left: 23%;
@@ -51,7 +58,7 @@ section{
 
 #game-over-div{
     width: 424px;
-    height: 682px;
+    height: 316px;
     background-image: url("../img/game-over.png");
     padding-top: 86%;
     padding-left: 23%;
@@ -66,6 +73,14 @@ section{
     overflow: hidden;
 }
 
+#protector{
+    width: 424px;
+    height: 682px;
+    position: absolute;
+    top: 0%;
+    left: 0%
+}
+
 #btnPause{
     width: 10%;
     position: absolute;
@@ -75,10 +90,10 @@ section{
 
 #index{
     width: 424px;
-    height: 682px;      
+    height: 372px;      
     padding-top: 73%;
     padding-left: 22%;
-    background-image: url("Initial-page.png");
+    background-image: url("../img/fondo.png");
 }
 
 #character {
