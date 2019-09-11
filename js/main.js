@@ -120,11 +120,11 @@ function character(){
         beforeGameOver();
         state.current = state.gameOver;
     }
-    if((xObstacles-120)>-7 && (xObstacles+120)<89 && speed>64.6){
+    if((xObstacles-120)>-7 && (xObstacles-120)<89 && speed>64.6){
         beforeGameOver();
         state.current = state.gameOver;
     }
-    if((xObstacles-120)>33 && (xObstacles+120)<85 && speed<44.6){
+    if((xObstacles-120)>33 && (xObstacles-120)<85 && speed<44.6){
         beforeGameOver();
         state.current = state.gameOver;
     }
