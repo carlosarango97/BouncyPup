@@ -54,7 +54,7 @@ function start(){
     setTimeout(function(){title.innerHTML = 2;}, 1000);
     setTimeout(function(){title.innerHTML = 1;}, 2000);
     setTimeout(function(){title.innerHTML = "start!";title.className+="start-title"}, 3000);    
-    setTimeout(function(){title.className += " invisible";title.innerHTML = 3;ok = true;state.current = state.ingame;animation_game();document.getElementById("btnPause").classList.remove("invisible");protect(true);},4000);
+    setTimeout(function(){title.className += " invisible";title.innerHTML = 3;ok = true;state.current = state.ingame;animation_game();document.getElementById("count").classList.remove("invisible");document.getElementById("btnPause").classList.remove("invisible");protect(true);},4000);
 }
 
 function background(){
@@ -84,11 +84,12 @@ function restart(){
     top2Obstacle.style.right = (xObstacles-120) + "%";
     bottom2Obstacle.style.right = (xObstacles-120) + "%";
     document.getElementById("number").classList.remove("invisible","start-title");
+    document.getElementById("count").className += " invisible";
 }
 
 function beforeGameOver(){
     clearInterval(idBackground);
-    clearInterval(idObstacles);    
+    clearInterval(idObstacles);   
 }
 
 function gameOver(){
@@ -96,6 +97,7 @@ function gameOver(){
     clearInterval(idBackground);
     clearInterval(idCharacter);
     clearInterval(idObstacles);
+    document.getElementById("count").innerHTML = "0";
     restart();
     page("game-section","game-over");
 }
@@ -132,6 +134,10 @@ function character(){
             beforeGameOver();
             state.current = state.gameOver;
             document.getElementById("btnPause").className += "invisible";
+        }
+        if(xObstacles==100 || xObstacles==220){
+            document.getElementById("count").innerHTML = parseInt(document.getElementById("count").innerHTML)+1;
+            xObstacles++;
         }
     }
 }

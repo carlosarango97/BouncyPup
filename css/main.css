@@ -33,6 +33,14 @@ section{
     left: 29% !important;
 }
 
+.count{
+    font-size: 6rem;
+    top: 4%;
+    left: 44%;
+    font-family: Numbers;
+    position: absolute;
+}
+
 .btnStart{
     width: 76%;
     position: absolute;
