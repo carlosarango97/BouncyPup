@@ -88,7 +88,7 @@ function restart(){
 
 function beforeGameOver(){
     clearInterval(idBackground);
-    clearInterval(idObstacles);
+    clearInterval(idObstacles);    
 }
 
 function gameOver(){
@@ -109,24 +109,30 @@ function character(){
     if(parseInt(document_character.style.bottom.split("%")[0])<8){
         gameOver();
     }
-    if(parseInt(document_character.style.bottom.split("%")[0])>85){
-        speed = 85;
-    }
-    if(xObstacles>-7 && xObstacles<89 && speed>55.6 && speed<89){
-        beforeGameOver();
-        state.current = state.gameOver;
-    }
-    if(xObstacles>33 && xObstacles<85 && speed<34.6){
-        beforeGameOver();
-        state.current = state.gameOver;
-    }
-    if((xObstacles-120)>-7 && (xObstacles-120)<89 && speed>64.6){
-        beforeGameOver();
-        state.current = state.gameOver;
-    }
-    if((xObstacles-120)>33 && (xObstacles-120)<85 && speed<44.6){
-        beforeGameOver();
-        state.current = state.gameOver;
+    if(state.current!=state.gameOver){        
+        if(parseInt(document_character.style.bottom.split("%")[0])>85){
+            speed = 85;
+        }
+        if(xObstacles>-7 && xObstacles<89 && speed>55.6 && speed<89){
+            beforeGameOver();
+            state.current = state.gameOver; 
+            document.getElementById("btnPause").className += "invisible";       
+        }
+        if(xObstacles>33 && xObstacles<85 && speed<34.6){
+            beforeGameOver();
+            state.current = state.gameOver;
+            document.getElementById("btnPause").className += "invisible";
+        }
+        if((xObstacles-120)>-7 && (xObstacles-120)<89 && speed>64.6){
+            beforeGameOver();
+            state.current = state.gameOver;
+            document.getElementById("btnPause").className += "invisible";
+        }
+        if((xObstacles-120)>33 && (xObstacles-120)<85 && speed<44.6){
+            beforeGameOver();
+            state.current = state.gameOver;
+            document.getElementById("btnPause").className += "invisible";
+        }
     }
 }
 
