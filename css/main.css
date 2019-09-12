@@ -72,6 +72,14 @@ section{
     padding-left: 23%;
 }
 
+#win-div{
+    width: 424px;
+    height: 316px;
+    background-image: url("../img/win.png");
+    padding-top: 86%;
+    padding-left: 23%;
+}
+
 #game{
     width: 424px;
     height: 682px;

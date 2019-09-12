@@ -2,6 +2,7 @@ var xBackground = 0;
 var gravity = 0.1;
 var speed = 60;
 var jump = 8;
+var xCharacter = 10;
 var idBackground;
 var idCharacter;
 var idObstacles;
@@ -13,6 +14,11 @@ var bottomObstacle = document.getElementById("bottom");
 var top2Obstacle = document.getElementById("top2");
 var bottom2Obstacle = document.getElementById("bottom2");
 var xObstacles = -90;
+var title_menu = document.getElementById("title-menu");
+var width_title_menu = 76;
+var left_title_menu = 14;
+var bool_title_menu = true;
+var idMenu;
 
 // This method change the section
 // This method has 2 parameters:
@@ -22,6 +28,15 @@ function page(pageOut, pageIn){
     document.getElementById(pageOut).className += "invisible";
     document.getElementById(pageIn).classList.remove("invisible");
     window.scroll(0,document.getElementById(pageIn).scrollTop);
+    if(pageOut == "initial-menu"){
+        clearInterval(idMenu);
+    }else if(pageIn=="initial-menu"){
+        idMenu = setInterval("menu()",130);
+    }
+}
+
+function open(){
+    idMenu = setInterval("menu()",130);
 }
 
 function pause(){
@@ -92,6 +107,11 @@ function beforeGameOver(){
     clearInterval(idObstacles);   
 }
 
+function beforeWin(){
+    clearInterval(idBackground);
+    clearInterval(idObstacles);   
+}
+
 function gameOver(){
     state.current = state.getReady;
     clearInterval(idBackground);
@@ -102,42 +122,61 @@ function gameOver(){
     page("game-section","game-over");
 }
 
+function win(){
+    clearInterval(idCharacter);
+    document.getElementById("count").innerHTML = "0";
+    restart();
+    page("game-section","win");
+}
+
 function character(){    
-    speed -= gravity;
-    if(state.current == state.gameOver){            
+    if(state.current != state.win){
         speed -= gravity;
-    }
-    document_character.style.bottom = speed + "%";
-    if(parseInt(document_character.style.bottom.split("%")[0])<8){
-        gameOver();
-    }
-    if(state.current!=state.gameOver){        
-        if(parseInt(document_character.style.bottom.split("%")[0])>85){
-            speed = 85;
+        if(state.current == state.gameOver){            
+            speed -= gravity;
         }
-        if(xObstacles>-7 && xObstacles<89 && speed>55.6 && speed<89){
-            beforeGameOver();
-            state.current = state.gameOver; 
-            document.getElementById("btnPause").className += "invisible";       
+        document_character.style.bottom = speed + "%";
+        if(parseInt(document_character.style.bottom.split("%")[0])<8){
+            gameOver();
         }
-        if(xObstacles>33 && xObstacles<85 && speed<34.6){
-            beforeGameOver();
-            state.current = state.gameOver;
-            document.getElementById("btnPause").className += "invisible";
+        if(state.current!=state.gameOver){        
+            if(parseInt(document_character.style.bottom.split("%")[0])>85){
+                speed = 85;
+            }
+            if(xObstacles>-7 && xObstacles<89 && speed>55.6 && speed<89){
+                beforeGameOver();
+                state.current = state.gameOver; 
+                document.getElementById("btnPause").className += "invisible";       
+            }
+            if(xObstacles>33 && xObstacles<85 && speed<34.6){
+                beforeGameOver();
+                state.current = state.gameOver;
+                document.getElementById("btnPause").className += "invisible";
+            }
+            if((xObstacles-120)>-7 && (xObstacles-120)<89 && speed>64.6){
+                beforeGameOver();
+                state.current = state.gameOver;
+                document.getElementById("btnPause").className += "invisible";
+            }
+            if((xObstacles-120)>33 && (xObstacles-120)<85 && speed<44.6){
+                beforeGameOver();
+                state.current = state.gameOver;
+                document.getElementById("btnPause").className += "invisible";
+            }
+            if(xObstacles==100 || xObstacles==220){
+                document.getElementById("count").innerHTML = parseInt(document.getElementById("count").innerHTML)+1;
+                xObstacles++;
+                if(level.current == level.first && parseInt(document.getElementById("count").innerHTML)==10){
+                    state.current = state.win;
+                    beforeWin();
+                }
+            }
         }
-        if((xObstacles-120)>-7 && (xObstacles-120)<89 && speed>64.6){
-            beforeGameOver();
-            state.current = state.gameOver;
-            document.getElementById("btnPause").className += "invisible";
-        }
-        if((xObstacles-120)>33 && (xObstacles-120)<85 && speed<44.6){
-            beforeGameOver();
-            state.current = state.gameOver;
-            document.getElementById("btnPause").className += "invisible";
-        }
-        if(xObstacles==100 || xObstacles==220){
-            document.getElementById("count").innerHTML = parseInt(document.getElementById("count").innerHTML)+1;
-            xObstacles++;
+    }else{
+        xCharacter+= 0.2;
+        document_character.style.left = xCharacter + "%";
+        if(xCharacter>100){
+            win(); 
         }
     }
 }
@@ -151,7 +190,15 @@ const state = {
     ingame: 1,
     getReady: 2,
     pause: 3,
-    gameOver: 4
+    gameOver: 4,
+    win: 5
+}
+
+const level = {
+    current: 1,
+    first: 1,
+    second: 2,
+    third: 3
 }
 
 function protect(ok){
@@ -176,3 +223,23 @@ document.getElementById("game").addEventListener("click", function() {
         flap();
     }
 });
+
+function next_level(){
+    page("win","initial-menu");
+}
+
+function menu(){
+    if(bool_title_menu){
+        width_title_menu++;
+        left_title_menu -= 0.5;
+        title_menu.style.width = width_title_menu + "%";
+        title_menu.style.left = left_title_menu + "%";
+        bool_title_menu = width_title_menu==80?false:true;
+    }else{
+        width_title_menu--;
+        left_title_menu += 0.5;
+        title_menu.style.width = width_title_menu + "%";
+        title_menu.style.left = left_title_menu + "%";
+        bool_title_menu = width_title_menu==76?true:false;
+    }
+}

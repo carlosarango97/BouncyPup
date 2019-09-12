@@ -8,7 +8,7 @@
     <title>BouncyPup</title>
     <link rel="StyleSheet" href="css/main.css">
 </head>
-<body>    
+<body onload="open();">    
     <!-- In this section we gonna make the game index (main)
     <section id="initial-menu" class="menu " >
     </section>
@@ -35,7 +35,7 @@
     </section> -->
     <section id="initial-menu">
         <div id="index">
-            <img src="img/Start.png" class="btnStart" onclick="page('initial-menu','game-section');start();document.getElementById('btnPause').className+=' invisible';state.current = state.getReady;protect(false);">
+            <img src="img/Start.png" id="title-menu" class="btnStart" onclick="page('initial-menu','game-section');start();document.getElementById('btnPause').className+=' invisible';state.current = state.getReady;protect(false);">
             <img src="img/BtnCreditos.png" style="position: absolute;top: 70%;" class="btnIndex" onclick="page('initial-menu','credits');">
         </div>
     </section>
@@ -68,6 +68,12 @@
             <span id="count" class="count invisible">0</span>
         </div>
         <div id="protector"></div>
+    </section>
+    <section id="win" class="invisible">
+        <div id="win-div">
+            <img src="img/BtnContinue.png" class="btnIndex" onclick="next_level();state.current = state.getReady;protect(false);">
+            <img src="img/BtnMenu.png" class="btnIndex" onclick="page('win','initial-menu'); menu();">
+        </div>
     </section>
     <script src="js/main.js"></script>   
 </body>
