@@ -126,6 +126,8 @@ function win(){
     clearInterval(idCharacter);
     document.getElementById("count").innerHTML = "0";
     restart();
+    xCharacter = 10;
+    document_character.style.left = xCharacter + "%";
     page("game-section","win");
 }
 
